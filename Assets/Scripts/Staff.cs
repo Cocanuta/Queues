@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Staff : MonoBehaviour {
-
+[System.Serializable]
+public class Staff {
+	
 	public int staffID;			// The ID of the staff member.
 	public string staffName;	// The name of the staff member.
 	public float staffEnergy;	// How much energy the staff member has.

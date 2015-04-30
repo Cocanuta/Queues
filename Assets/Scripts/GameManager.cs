@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
-		if (!selectedStaff == null)
+		if (selectedStaff != null)
 		{
 			if (Input.GetMouseButtonDown (0))
 			{
@@ -36,7 +36,11 @@ public class GameManager : MonoBehaviour {
 				{
 					if (hitInfo.transform.gameObject.tag == "Till")
 					{
-						SpawnStaff (hitInfo.transform.position);
+						if(hitInfo.transform.gameObject.GetComponent<Till>().staff.staffName == "")
+						{
+							SpawnStaff (hitInfo.transform.position);
+							hitInfo.transform.gameObject.GetComponent<Till>().staff = selectedStaff;
+						}
 					}
 				}
 			}
