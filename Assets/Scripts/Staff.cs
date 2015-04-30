@@ -6,6 +6,7 @@ public class Staff {
 	
 	public int staffID;			// The ID of the staff member.
 	public string staffName;	// The name of the staff member.
+	public Till till;			// Which till the staff member on.
 	public float staffEnergy;	// How much energy the staff member has.
 
 	// Creates an instance of Staff.
@@ -38,5 +39,25 @@ public class Staff {
 	public void increaseEnergy()
 	{
 		staffEnergy += 0.01f;
+	}
+
+	// Assign a till to the staff.
+	public void assignTill(Till t)
+	{
+		if (!till.Equals (null)) 
+		{
+			till.staff = null;
+			till = t;
+		} 
+		else 
+		{
+			till = t;
+		}
+	}
+
+	// Remove the till from the staff member.
+	public void unassignTill()
+	{
+		Till = null;
 	}
 }

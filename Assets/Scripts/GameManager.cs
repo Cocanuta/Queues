@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour {
 						{
 							SpawnStaff (hitInfo.transform.position);
 							hitInfo.transform.gameObject.GetComponent<Till>().staff = selectedStaff;
+							//selectedStaff.assignTill();
 						}
 					}
 				}
