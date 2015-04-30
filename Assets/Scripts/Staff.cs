@@ -2,62 +2,21 @@
 using System.Collections;
 
 [System.Serializable]
-public class Staff {
+public class Staff{
 	
 	public int staffID;			// The ID of the staff member.
 	public string staffName;	// The name of the staff member.
 	public Till till;			// Which till the staff member on.
 	public float staffEnergy;	// How much energy the staff member has.
+	public GameObject staffPrefab;
 
 	// Creates an instance of Staff.
-	public Staff (int id, string name)
+	public Staff (int id, string name, GameObject newObject)
 	{
 		staffID = id;
 		staffName = name;
 		staffEnergy = 100.0f;
+		staffPrefab = newObject;
 	}
 
-	// Sets the energy to max.
-	public void setEnergyToMax()
-	{
-		staffEnergy = 100.0f;
-	}
-
-	// Sets the energy to 0;
-	public void setEnergyToZero()
-	{
-		staffEnergy = 0.0f;
-	}
-
-	// Decreases the energy by 0.01.
-	public void decreaseEnergy()
-	{
-		staffEnergy -= 0.01f;
-	}
-
-	// Increases the energy by 0.01.
-	public void increaseEnergy()
-	{
-		staffEnergy += 0.01f;
-	}
-
-	// Assign a till to the staff.
-	public void assignTill(Till t)
-	{
-		if (!till.Equals (null)) 
-		{
-			till.staff = null;
-			till = t;
-		} 
-		else 
-		{
-			till = t;
-		}
-	}
-
-	// Remove the till from the staff member.
-	public void unassignTill()
-	{
-		Till = null;
-	}
 }

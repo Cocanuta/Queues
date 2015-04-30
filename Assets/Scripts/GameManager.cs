@@ -4,22 +4,27 @@ using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
 
-	GameObject[] tills;
 	public GameObject customerObject;
 	public GameObject staffObject;
 
 	public List<Staff> staff = new List<Staff>();
+	public List<Till> tills = new List<Till> ();
 
 	public Staff selectedStaff;
 
 	// Use this for initialization
 	void Start () {
 
-		staff.Add(new Staff(0, "Ben"));
-		staff.Add(new Staff(1, "David"));
-		staff.Add(new Staff(2, "Caryan"));
+		staff.Add(new Staff(0, "Ben", staffObject));
+		staff.Add(new Staff(1, "David", staffObject));
+		staff.Add(new Staff(2, "Caryan", staffObject));
 
-		tills = GameObject.FindGameObjectsWithTag ("Till");
+		tills.Add (new Till (0, GameObject.Find ("Till")));
+		tills.Add (new Till (1, GameObject.Find ("Till1")));
+		tills.Add (new Till (2, GameObject.Find ("Till2")));
+		tills.Add (new Till (3, GameObject.Find ("Till3")));
+		tills.Add (new Till (4, GameObject.Find ("Till4")));
+
 	
 	}
 	
@@ -36,11 +41,16 @@ public class GameManager : MonoBehaviour {
 				{
 					if (hitInfo.transform.gameObject.tag == "Till")
 					{
-						if(hitInfo.transform.gameObject.GetComponent<Till>().staff.staffName == "")
+						foreach(Till t in tills)
 						{
-							SpawnStaff (hitInfo.transform.position);
-							hitInfo.transform.gameObject.GetComponent<Till>().staff = selectedStaff;
-							//selectedStaff.assignTill();
+							if(t.tillObject == hitInfo.transform.gameObject)
+							{
+								if(t.staff != null)
+								{
+									t.staff = selectedStaff;
+									assignTill(selectedStaff, t);
+								}
+							}
 						}
 					}
 				}
@@ -67,17 +77,88 @@ public class GameManager : MonoBehaviour {
 		GUILayout.EndArea ();
 	}
 
-	public void SpawnStaff(Vector3 position)
-	{
-		Vector3 spawnLocation = position + new Vector3 (0, 0.5f, -1);
-		GameObject newStaff = Instantiate (staffObject);
-		newStaff.transform.position = spawnLocation;
-	}
-
 	public void SpawnCustomer()
 	{
-		Vector3 spawnLocation = tills [Random.Range (0, tills.Length)].transform.position + new Vector3 (14, 0.5f, 1);
+		Vector3 spawnLocation = tills [Random.Range (0, tills.Count)].tillObject.transform.position + new Vector3 (14, 0.5f, 1);
 		GameObject newCustomer = Instantiate (customerObject);
 		newCustomer.transform.position = spawnLocation;
+	}
+
+	// Sets the energy to max.
+	public void setEnergyToMax(Staff staff)
+	{
+		staff.staffEnergy = 100.0f;
+	}
+	
+	// Sets the energy to 0;
+	public void setEnergyToZero(Staff staff)
+	{
+		staff.staffEnergy = 0.0f;
+	}
+	
+	// Decreases the energy by 0.01.
+	public void decreaseEnergy(Staff staff)
+	{
+		staff.staffEnergy -= 0.01f;
+	}
+	
+	// Increases the energy by 0.01.
+	public void increaseEnergy(Staff staff)
+	{
+		staff.staffEnergy += 0.01f;
+	}
+	
+	// Assign a till to the staff.
+	public void assignTill(Staff staff, Till till)
+	{
+		if (staff.till != null) 
+		{
+			staff.till.staff = null;
+			staff.till = till;
+			till.staff = staff;
+		} 
+		else 
+		{
+			staff.till = till;
+		}
+		Vector3 spawnLocation = till.tillObject.transform.position + new Vector3 (0, 0.5f, -1);
+		GameObject newStaffObject = Instantiate (staff.staffPrefab);
+		newStaffObject.transform.position = spawnLocation;
+		newStaffObject.name = staff.staffName + "Object";
+	}
+	
+	// Remove the till from the staff member.
+	public void unassignTill(Staff staff)
+	{
+		staff.till = null;
+		Destroy (GameObject.Find(staff.staffName + "Object"));
+	}
+
+	// Assigns a staff member to the till. 0: cannot assign; 1: can assign;
+	public int assignStaff (Till till, Staff st)
+	{
+		if (till.staff.Equals(null)) // If there is no staff member assigned, assign a staff member.
+		{
+			till.staff = st;
+			return 1;
+		}
+		else // If there is a staff member assigned, you cannot assign another.
+		{
+			return 0;
+		}
+	}
+	
+	// Removes a staff member from the till. 0: cannot remove; 1: can remove;
+	public int removeStaff(Till till)
+	{
+		if (!till.staff.Equals(null)) // If there is a staff member assigned, remove them.
+		{
+			till.staff = null;
+			return 1;
+		} 
+		else // If there is not staff member assigned, you cannot remove them.
+		{
+			return 0;
+		}
 	}
 }
