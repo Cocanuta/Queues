@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour {
 
+
 	public GameObject customerObject;
 	public GameObject staffObject;
 
@@ -20,10 +21,10 @@ public class GameManager : MonoBehaviour {
 		staff.Add(new Staff(2, "Caryan", staffObject));
 
 		tills.Add (new Till (0, GameObject.Find ("Till")));
-		tills.Add (new Till (1, GameObject.Find ("Till1")));
-		tills.Add (new Till (2, GameObject.Find ("Till2")));
-		tills.Add (new Till (3, GameObject.Find ("Till3")));
-		tills.Add (new Till (4, GameObject.Find ("Till4")));
+		tills.Add (new Till (1, GameObject.Find ("Till 1")));
+		tills.Add (new Till (2, GameObject.Find ("Till 2")));
+		tills.Add (new Till (3, GameObject.Find ("Till 3")));
+		tills.Add (new Till (4, GameObject.Find ("Till 4")));
 
 	
 	}
@@ -45,7 +46,7 @@ public class GameManager : MonoBehaviour {
 						{
 							if(t.tillObject == hitInfo.transform.gameObject)
 							{
-								if(t.staff != null)
+								if(t.staff.staffPrefab == null)
 								{
 									t.staff = selectedStaff;
 									assignTill(selectedStaff, t);
@@ -113,6 +114,7 @@ public class GameManager : MonoBehaviour {
 	{
 		if (staff.till != null) 
 		{
+			Destroy (GameObject.Find(staff.staffName + "Object"));
 			staff.till.staff = null;
 			staff.till = till;
 			till.staff = staff;
