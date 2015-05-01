@@ -5,15 +5,20 @@ using System.Collections;
 public class Till {
 
 	public int tillID;	// The ID of the tills.
-	public Staff staff;	// Which staff member is on the till.
+	public int staffId;	// Which staff member is on the till.
 	public GameObject tillObject;
+	public GameObject endCustomer;
+	public Vector3 endOfLine;
+	public int numberOfCustomers;
 
 	// Creates an instance of Till.
 	public Till (int id, GameObject newObject)
 	{
 		tillID = id;
-		staff = null;
+		staffId = 0;
 		tillObject = newObject;
+		endCustomer = null;
+		endOfLine = newObject.transform.position + new Vector3 (0, 0, 1);
+		numberOfCustomers = 0;
 	}
-
 }

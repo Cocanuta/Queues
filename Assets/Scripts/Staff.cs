@@ -6,7 +6,7 @@ public class Staff{
 	
 	public int staffID;			// The ID of the staff member.
 	public string staffName;	// The name of the staff member.
-	public Till till;			// Which till the staff member on.
+	public int tillId;			// Which till the staff member on.
 	public float staffEnergy;	// How much energy the staff member has.
 	public GameObject staffPrefab;
 
@@ -15,6 +15,7 @@ public class Staff{
 	{
 		staffID = id;
 		staffName = name;
+		tillId = 0;
 		staffEnergy = 100.0f;
 		staffPrefab = newObject;
 	}
