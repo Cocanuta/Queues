@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+
 [System.Serializable]
 public class Till {
 
@@ -14,7 +15,5 @@ public class Till {
 		staff = null;
 		tillObject = newObject;
 	}
-
-
 
 }
